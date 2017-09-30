@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="SkyTrack.LaborSetup.Views.LaborSetup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SkyTrack.LaborSetup.Views"
+             xmlns:WPF="clr-namespace:SkyWest.Common.WPF;assembly=SkyWest.Common"
+             mc:Ignorable="d" 
+             Background="White"
+             d:DesignHeight="600" d:DesignWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <!--Row 0-->
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <!--Column 0-->
+            <StackPanel Grid.Row="0" 
+                    Grid.Column="0"
+                    Margin="5">
+                <ComboBox x:Name="comboBoxBase" 
+                          SelectedIndex="0"
+                          SelectedItem="{Binding SelectedBase, Mode=TwoWay}"
+                          ItemsSource="{Binding Bases}"
+                          Margin="0,0,0,3"/>
+                <DatePicker x:Name="datePicker"
+                            SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                            Margin="0,0,0,3"/>
+                <TextBlock FontSize="11" 
+                           Text="Target Capacity: 90%" />
+            </StackPanel>
+
+            <!--Column 1-->
+            <GroupBox Grid.Row="0"
+                  Grid.Column="1"
+                  Header="Labor Range"
+                  Foreground="Black"
+                  Margin="5,0,5,5">
+                <StackPanel Orientation="Horizontal" 
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+                    <StackPanel>
+                        <Label Margin="0"
+                               FontWeight="Bold"
+                               Content="Start Time:"/>
+                        <ComboBox x:Name="datePickerStartTime" 
+                                  Width="100"
+                                  ItemsSource="{Binding Times}" 
+                                  SelectedItem="{Binding SelectedStartTime}"
+                                  Margin="5">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding StringFormat=t}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Margin="0"
+                               FontWeight="Bold"
+                               Content="End Time:"/>
+                        <ComboBox x:Name="datePickerEndTime" 
+                              ItemsSource="{Binding Times}" 
+                              SelectedItem="{Binding SelectedEndTime}"
+                              Width="100"
+                              Margin="5">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding StringFormat=t}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            
+            <!--Column 2-->
+            <StackPanel Grid.Row="0" 
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Margin="5">
+                <Button Content="Add"
+                        Width="75"
+                        Command="{Binding AddCommand}"
+                        Margin="0,0,0,3"/>
+                <Button Content="Modify"
+                        Width="75"
+                        Command="{Binding ModifyCommand}"
+                        Margin="0,0,0,3"/>
+                <Button Content="Delete"
+                        Command="{Binding DeleteCommand}"
+                        Width="75"/>
+            </StackPanel>
+        </Grid>
+
+        <!--Row 1-->
+        <Grid Grid.Row="1">
+            <DataGrid x:Name="laborDataGrid" 
+                      ColumnWidth="*" 
+                      AutoGenerateColumns="False"
+                      CanUserDeleteRows="False"
+                      ItemsSource="{Binding LaborDataCollection}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Emp No"
+                                        MinWidth="70"
+                                        Binding="{Binding EmpNo}"/>
+                    <DataGridTextColumn Header="Emp Name"
+                                        Binding="{Binding EmpName}"/>
+                    <DataGridTextColumn Header="Shift Start"
+                                        MinWidth="120"
+                                        Binding="{Binding ShiftStart}"/>
+                    <DataGridTextColumn Header="Shift End"
+                                        MinWidth="120"
+                                        Binding="{Binding ShiftEnd}"/>
+                    <DataGridTextColumn Header="Hrs"
+                                        MinWidth="30"
+                                        IsReadOnly="True"
+                                        Binding="{Binding Hours}"/>
+                    <DataGridTextColumn Header="Job"
+                                        Binding="{Binding Job}"/>
+                    <DataGridTextColumn Header="Type"
+                                        Binding="{Binding Type}"/>
+                </DataGrid.Columns>   
+            </DataGrid>
+        </Grid>
+        
+        <!--Grid 2-->
+        <Grid Grid.Row="2">
+            <TextBlock Text="Total:" 
+                       FontWeight="Bold" 
+                       Background="LightGray" />
+        </Grid>
+    </Grid>
+    
+</UserControl>
